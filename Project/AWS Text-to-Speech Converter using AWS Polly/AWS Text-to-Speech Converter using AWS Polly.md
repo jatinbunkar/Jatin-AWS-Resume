@@ -13,6 +13,8 @@ AWS services to convert text files (such as blog posts, articles, newsletters, o
 
 ## **Architecture Diagram:**
 
+
+
 <img width="753" alt="image" src="https://github.com/user-attachments/assets/238b0329-7014-40c2-bc99-8025223f6ce1" />
 
 ## **Steps:**
