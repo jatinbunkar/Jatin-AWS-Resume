@@ -13,14 +13,18 @@ AWS services to convert text files (such as blog posts, articles, newsletters, o
 
 ## **Architecture Diagram:**
 
-<img width="753" alt="image" src="https://github.com/user-attachments/assets/238b0329-7014-40c2-bc99-8025223f6ce1" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project3image1.png" alt="Screenshot of project3image1">
+</p>
 
 ## **Steps:**
 
 * Step 1: Set Up an AWS Account 
 * Step 2: Create two S3 Buckets (Source S3 Bucket Name: jatin-polly-source-bucket, Destination S3 Bucket Name: jatin-polly-destination-bucket) 
 
-<img width="1440" alt="image" src="https://github.com/user-attachments/assets/3236c092-2046-402a-be37-ac1f11d8b289" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project3image2.png" alt="Screenshot of project3image2">
+</p>
 
 * Step 3: Create an IAM Policy (IAM Policy Name: jatin-polly-lambda-policy) 
 
@@ -53,7 +57,9 @@ AWS services to convert text files (such as blog posts, articles, newsletters, o
 
   ```
 
-  <img width="1440" alt="image" src="https://github.com/user-attachments/assets/76b37d7e-73b9-4093-92fa-5949080e4313" />
+  <p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project3image3.png" alt="Screenshot of project3image3">
+</p>
 
 
 * Step 4: Create an IAM Role (IAM Role Name: jatin-polly-lambda-role) and attach jatin-polly-lambda-policy and AWSLambdaBasicExecutionRole Policies
@@ -63,12 +69,17 @@ AWS services to convert text files (such as blog posts, articles, newsletters, o
   - Add Environment Variables (`SOURCE_BUCKET`: Name of your source S3 bucket and `DESTINATION_BUCKET`: Name of your destination S3 bucket.
 * Step 6: Configure S3 Event Notification
   - Set up an event notification in the source S3 bucket to trigger the Lambda function on new object creation events with the `.txt` suffix.
- 
-<img width="1439" alt="image" src="https://github.com/user-attachments/assets/bbd1224e-25ac-4745-96b2-9e71f2ed99c2" />
+
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project3image4.png" alt="Screenshot of project3image4">
+</p>
 
 
 * Step 7: Write Lambda Function Code
 
-<img width="1440" alt="image" src="https://github.com/user-attachments/assets/a91609eb-6cf1-47ea-9e94-434f13e08a97" />
+
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project3image5.png" alt="Screenshot of project3image5">
+</p>
 
 * Step 8: Test the System
