@@ -15,7 +15,9 @@ This project aims to develop an automated image processing and management system
 
 ## Architecture Diagram
 
-<img width="855" alt="image" src="https://github.com/user-attachments/assets/53b56c17-02a5-4757-829f-8ff428181842" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image1.png" alt="Screenshot of project4image1">
+</p>
 
 ## **Steps :**
 
@@ -28,19 +30,29 @@ This project aims to develop an automated image processing and management system
 
 Bucket: image-initial-upload
 
-<img width="1212" alt="image" src="https://github.com/user-attachments/assets/bb6fca05-19e9-4d9b-9459-5dbba10898cf" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image2.png" alt="Screenshot of project4image2">
+</p>
 
-<img width="1213" alt="image" src="https://github.com/user-attachments/assets/0eb5b55b-0442-48a1-a28d-12f374044015" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image3.png" alt="Screenshot of project4image3">
+</p>
 
 Bucket: image-compressed
 
-<img width="1213" alt="image" src="https://github.com/user-attachments/assets/5e4b311f-a1c8-4f9d-bd97-bddc7e15ff34" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image3.png" alt="Screenshot of project4image3">
+</p>
 
-<img width="1209" alt="image" src="https://github.com/user-attachments/assets/8b788b64-6d77-4504-bf15-3311480c6e9e" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image4.png" alt="Screenshot of project4image4">
+</p>
 
 ### Buckets:
 
-<img width="976" alt="image" src="https://github.com/user-attachments/assets/9ba25fe9-2d3c-423b-8a72-7cd3393bcbc5" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image5.png" alt="Screenshot of project4image5">
+</p>
 
 3. As you can see above , I created two buckets one is Source bucket and another one is Destination bucket.
 
@@ -51,28 +63,48 @@ Bucket: image-compressed
 1. Navigate to the SNS console.
 2. Follow the Outlined Steps below.
 
-<img width="1435" alt="image" src="https://github.com/user-attachments/assets/6a8b14e6-7614-47ea-86a9-df0a133f84de" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image6.png" alt="Screenshot of project4image6">
+</p>
 
-<img width="1321" alt="image" src="https://github.com/user-attachments/assets/760ba102-fb72-477c-b7dc-38f01fcda1c1" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image7.png" alt="Screenshot of project4image7">
+</p>
 
-<img width="1217" alt="image" src="https://github.com/user-attachments/assets/4e419ae9-ed90-4ff8-8588-45b5a0eb0fef" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image8.png" alt="Screenshot of project4image8">
+</p>
 
-<img width="1229" alt="image" src="https://github.com/user-attachments/assets/c03cea2d-0c70-47ba-b8fd-680cda21c70a" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image9.png" alt="Screenshot of project4image9">
+</p>
 
-<img width="980" alt="image" src="https://github.com/user-attachments/assets/42c20d04-0bd4-4d1e-8e79-579237cc2ccc" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image10.png" alt="Screenshot of project4image10">
+</p>
 
-<img width="1188" alt="image" src="https://github.com/user-attachments/assets/0137e8a3-d5a3-4af7-94a9-dab5e9765ce7" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image11.png" alt="Screenshot of project4image11">
+</p>
 
-<img width="983" alt="image" src="https://github.com/user-attachments/assets/10ee639c-a666-470e-8637-922e67095878" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image12.png" alt="Screenshot of project4image12">
+</p>
 
 3. Scroll down and Click "Create subscription"
 4. After this , you will receive some mail for Subscription Confirmation and you have to confirm that.
 
-<img width="986" alt="image" src="https://github.com/user-attachments/assets/e2a19931-1994-4eec-9949-0fece540bfcd" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image13.png" alt="Screenshot of project4image13">
+</p>
 
-<img width="616" alt="image" src="https://github.com/user-attachments/assets/0987c14b-0383-488b-9349-aef9292ac6f1" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image14.png" alt="Screenshot of project4image14">
+</p>
 
-<img width="979" alt="image" src="https://github.com/user-attachments/assets/3b767ae3-c7fc-4fad-978b-daa3f70b397a" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image15.png" alt="Screenshot of project4image15">
+</p>
 
 
 ## Step 3 :
@@ -82,9 +114,13 @@ Bucket: image-compressed
 1. Navigate to the Lambda Console.
 2. Follow the Outlined steps below.
 
-<img width="1217" alt="image" src="https://github.com/user-attachments/assets/507419fe-3e70-4ae4-96f9-63437ba5e980" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image16.png" alt="Screenshot of project4image16">
+</p>
 
-<img width="1214" alt="image" src="https://github.com/user-attachments/assets/4e753d83-25f7-4e79-92e4-c4a8015a67a3" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image17.png" alt="Screenshot of project4image17">
+</p>
 
 3. Now replace the default code with the image-resizing-s3.py or below code and deploy the changes , Don't test the code now we have to do some more actions before testing.
 
@@ -152,21 +188,35 @@ def resize_and_compress_image(image_data, quality=75):
 
 4. After that , We have to give some permission for our Lambda Function to do our process (resizing) , For that navigate to the IAM Console and follow the below steps.
 
-<img width="1440" alt="image" src="https://github.com/user-attachments/assets/7e2a6642-6f23-4305-8df1-70d64e4b0bd1" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image18.png" alt="Screenshot of project4image18">
+</p>
 
-<img width="1203" alt="image" src="https://github.com/user-attachments/assets/bddb3351-8f45-4e8e-8b0d-1e782371e1b8" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image19.png" alt="Screenshot of project4image19">
+</p>
 
-<img width="1206" alt="image" src="https://github.com/user-attachments/assets/d7a76c06-ec09-41d0-8e7e-44a9c7027b2a" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image20.png" alt="Screenshot of project4image20">
+</p>
 
-<img width="1438" alt="image" src="https://github.com/user-attachments/assets/e2493c65-1d38-4697-aa5f-06cfeb7ceb23" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image21.png" alt="Screenshot of project4image21">
+</p>
 
 5. Now navigate to the Lambda Console and follow the steps below.
 
-<img width="1218" alt="image" src="https://github.com/user-attachments/assets/0f21bbdd-4e68-4220-80b2-8f1514a506a9" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image22.png" alt="Screenshot of project4image22">
+</p>
 
-<img width="1315" alt="image" src="https://github.com/user-attachments/assets/a43fcb89-d36f-449b-ac99-77eaa9b3e73c" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image23.png" alt="Screenshot of project4image23">
+</p>
 
-<img width="1335" alt="image" src="https://github.com/user-attachments/assets/a21dfa82-d78c-47b9-8791-a31fc137bb9d" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image24.png" alt="Screenshot of project4image24">
+</p>
 
 6. Now we have to trigger the function.
 
