@@ -220,11 +220,18 @@ def resize_and_compress_image(image_data, quality=75):
 
 6. Now we have to trigger the function.
 
-<img width="1006" alt="image" src="https://github.com/user-attachments/assets/8e1b84ed-a823-40bf-9d3b-d3a392685849" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image25.png" alt="Screenshot of project4image25">
+</p>
 
-<img width="1245" alt="image" src="https://github.com/user-attachments/assets/44813fb7-d52a-4c06-a4aa-e18fc9c2ecd6" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image26.png" alt="Screenshot of project4image26">
+</p>
 
-<img width="824" alt="image" src="https://github.com/user-attachments/assets/20f340cf-0eb5-4686-8656-e31cd1c6719e" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image27.png" alt="Screenshot of project4image27">
+</p>
+
 
 7. Now we have to go to code section , and scroll down to layers.
 8. We have to add layer .
@@ -233,22 +240,29 @@ def resize_and_compress_image(image_data, quality=75):
 11. Follow the outlined Steps below.
 
 
-<img width="1262" alt="image" src="https://github.com/user-attachments/assets/88be358d-a59a-43bd-86c2-85154807d6f9" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image28.png" alt="Screenshot of project4image28">
+</p>
 
-<img width="1008" alt="image" src="https://github.com/user-attachments/assets/9330844e-a650-448f-8d03-1b0dd75adace" />
-
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image29.png" alt="Screenshot of project4image29">
+</p>
 
 12.You can copy the arn from below.
 
     - arn:aws:lambda:us-east-1:770693421928:layer:Klayers-p39-pillow:1
 
-<img width="995" alt="image" src="https://github.com/user-attachments/assets/8fc6cb7b-3945-48ac-9631-5a984f501d32" />
+
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image30.png" alt="Screenshot of project4image30">
+</p>
 
 
 13. After done all the actions above , now we can test our code.
 
-
-<img width="1215" alt="image" src="https://github.com/user-attachments/assets/8dd2b9f2-bde2-413c-ac78-ee0deb96c7c2" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image31.png" alt="Screenshot of project4image31">
+</p>
 
 ## **Step 4 :**
 
@@ -257,17 +271,27 @@ def resize_and_compress_image(image_data, quality=75):
 1. Navigate to the S3 Console.
 2. Upload Some images in Source Bucket.
 
-<img width="1217" alt="image" src="https://github.com/user-attachments/assets/a5ca4821-d79e-467f-844d-28f8bd7a88c0" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image32.png" alt="Screenshot of project4image32">
+</p>
 
-<img width="1244" alt="image" src="https://github.com/user-attachments/assets/2ee7fb89-868a-43b0-9471-a464fa52e337" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image33.png" alt="Screenshot of project4image33">
+</p>
 
-<img width="1219" alt="image" src="https://github.com/user-attachments/assets/ce9287e0-5b64-49ca-ae13-61ea093ece92" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image34.png" alt="Screenshot of project4image34">
+</p>
 
-<img width="1224" alt="image" src="https://github.com/user-attachments/assets/c85f0455-7156-40e1-8a43-96e8ded346b0" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image35.png" alt="Screenshot of project4image35">
+</p>
 
 
 ## Email Notification
 
-<img width="1101" alt="image" src="https://github.com/user-attachments/assets/b43d0671-b9b7-4b46-9917-de123b16f1c1" />
+<p align="center">
+  <img src="https://github.com/jatinbunkar/Jatin-AWS-Resume/blob/cc4e2916483f59feb76b63427418e8322f67bf85/Project/Photos/project4image36.png" alt="Screenshot of project4image36">
+</p>
 
 ## Successfully resized and sent the notification.
