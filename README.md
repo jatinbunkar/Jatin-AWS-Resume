@@ -3,7 +3,7 @@
 📍 Pune, Maharashtra, India  
 📧 [jatinbunkar274@gmail.com](mailto:jatinbunkar274@gmail.com)  
 📞 (+91) 9009555080  
-🔗 [LinkedIn](https://linkedin.com/in/your-profile) | [GitHub](https://github.com/your-profile)
+🔗 [LinkedIn](https://www.linkedin.com/in/jatinbunkar/) | [GitHub](https://github.com/jatinbunkar)
 
 ---
 
@@ -24,13 +24,13 @@ _Bachelor of Technology (Electronics & Communication Engineering)_
 
 ## 🏅 Certifications
 
-- 🧠 **AWS Certified SysOps Administrator – Associate** (Jan 2025)  
-- 🧠 **AWS Certified Solutions Architect – Associate** (Oct 2023)  
-- 🧠 **AWS Certified Cloud Practitioner** (Jan 2023)
+- **AWS Certified SysOps Administrator – Associate** (Jan 2025)  
+- **AWS Certified Solutions Architect – Associate** (Oct 2023)  
+- **AWS Certified Cloud Practitioner** (Jan 2023)
 
 ---
 
-## 💻 Technical Projects ([GitHub Portfolio](https://github.com/your-profile))
+## 💻 Technical Projects ([GitHub Portfolio](https://github.com/jatinbunkar/Jatin-AWS-Resume/tree/main/Project))
 
 - 🔧 **Serverless EC2 Instance Scheduler**  
   ⮞ AWS Lambda + EventBridge to start/stop EC2 during business hours to cut costs.
