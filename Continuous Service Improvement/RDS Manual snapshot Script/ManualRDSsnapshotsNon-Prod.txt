@@ -1,0 +1,132 @@
+import boto3
+import subprocess, csv, os, json
+import argparse, logging
+
+# Enable Logging
+logging.basicConfig(filename='GetRDSManualSnapshots.log', level=logging.INFO)
+
+# Define fields for CSV
+field_names = ['Account', 'SnapshotIdentifier', 'DBInstanceIdentifier', 'SnapshotCreateTime', 'Engine', 'EngineVersion', 'SnapshotType', 'Status', 'Region']
+rows = []
+
+# Clear terminal
+subprocess.call(["clear"], shell=True)
+
+# Define the list of specific accounts
+specific_accounts = [
+    "==========Account ID==========="
+]
+
+# Function to return predefined account list
+def getallAccounts():
+    print('Fetching RDS Snapshot Report from Predefined AWS Accounts')
+    accountList = specific_accounts
+    logging.info(f"Using the predefined account list: {accountList}")
+    return accountList
+
+# Function to assume IAM role
+def assume_role(target_account, role):
+    sts = boto3.client('sts')
+    try:
+        assumed = sts.assume_role(
+            RoleArn=f"arn:aws:iam::{target_account}:role/{role}",
+            RoleSessionName='CrossAccountRDSFetch'
+        )
+    except sts.exceptions.ClientError as err:
+        logging.error(f"Error assuming role in account {target_account}: {err}")
+        print(f"Error assuming role in account {target_account}: {err}")
+        return False
+    
+    return {
+        'AccessKeyId': assumed['Credentials']['AccessKeyId'],
+        'SecretAccessKey': assumed['Credentials']['SecretAccessKey'],
+        'SessionToken': assumed['Credentials']['SessionToken']
+    }
+
+# Get all AWS regions
+def get_all_regions():
+    ec2 = boto3.client('ec2')
+    regions = ec2.describe_regions()['Regions']
+    return [r['RegionName'] for r in regions]
+
+# Get manual RDS snapshots
+def get_manual_snapshots(account, client, region):
+    logging.info(f"Fetching RDS snapshots in {region} for account {account}")
+    try:
+        paginator = client.get_paginator('describe_db_snapshots')
+        for page in paginator.paginate(SnapshotType='manual'):
+            for snap in page['DBSnapshots']:
+                rows.append({
+                    'Account': account,
+                    'SnapshotIdentifier': snap['DBSnapshotIdentifier'],
+                    'DBInstanceIdentifier': snap.get('DBInstanceIdentifier', ''),
+                    'SnapshotCreateTime': snap['SnapshotCreateTime'],
+                    'Engine': snap['Engine'],
+                    'EngineVersion': snap['EngineVersion'],
+                    'SnapshotType': snap['SnapshotType'],
+                    'Status': snap['Status'],
+                    'Region': region
+                })
+    except Exception as e:
+        logging.error(f"Failed fetching snapshots in region {region} for account {account}: {e}")
+
+# Write to CSV
+def write_csv(filepath):
+    with open(filepath, 'w') as f:
+        writer = csv.DictWriter(f, fieldnames=field_names)
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"CSV written to {filepath}")
+
+# Main execution
+def main():
+    sts_client = boto3.client("sts")
+    current_account = sts_client.get_caller_identity()["Account"]
+    regions = get_all_regions()
+    total_accounts = 0
+
+    if arole:
+        accounts = getallAccounts()
+        for act in accounts:
+            if act == current_account:
+                continue
+            credentials = assume_role(act, arole)
+            if credentials:
+                total_accounts += 1
+                for region in regions:
+                    client = boto3.client('rds',
+                        region_name=region,
+                        aws_access_key_id=credentials['AccessKeyId'],
+                        aws_secret_access_key=credentials['SecretAccessKey'],
+                        aws_session_token=credentials['SessionToken'])
+                    get_manual_snapshots(act, client, region)
+    else:
+        for region in regions:
+            client = boto3.client('rds', region_name=region)
+            get_manual_snapshots(current_account, client, region)
+
+    print(f"Fetched {len(rows)} RDS manual snapshots across {total_accounts} accounts.")
+    logging.info(f"Fetched {len(rows)} RDS manual snapshots across {total_accounts} accounts.")
+
+    if rows:
+        write_csv(file)
+    else:
+        print("No manual snapshots found.")
+
+# Entry point
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Generate report of RDS Manual Snapshots across accounts.')
+    parser.add_argument('--file', required=True, help='Output CSV file path')
+    parser.add_argument('--role', required=False, help='IAM Role to assume in other accounts')
+
+    try:
+        args = parser.parse_args()
+        file = args.file
+        arole = args.role
+    except NameError:
+        logging.error("Missing required arguments")
+
+    if os.path.exists(file):
+        raise Exception("File already exists!")
+    else:
+        main()

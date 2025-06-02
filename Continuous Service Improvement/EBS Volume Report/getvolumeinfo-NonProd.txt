@@ -1,0 +1,174 @@
+import boto3
+import subprocess, csv, os, json
+import argparse, logging
+
+# Enable Logging
+logging.basicConfig(filename='GetVolumeDetailsPredefinedAccounts.log', level=logging.INFO)
+
+# Define the Global variable here
+subprocess.call(["clear"], shell=True)
+field_names = ['Account', 'Volume_Id', 'Volume_Size', 'Availability_Zone', 'Volume_Type', 'State', 'CreateTime', 'Description', 'Owner', 'Team', 'Instance_Id']
+rows = []
+
+# Define the list of specific accounts you want to fetch EBS volumes from
+specific_accounts = [
+    "381492023353"
+    
+]
+
+# Function to only return specific account
+def getallAccounts():
+    print('Fetching Volume Report from Predefined AWS Accounts')
+    # Use the predefined list of accounts instead of fetching from AWS Organizations
+    accountList = specific_accounts
+    logging.info(f"Using the predefined account list: {accountList}")
+    return accountList
+
+# Function to assume role for a given account
+def assume_role(target_account, role):
+    sts = boto3.client('sts')
+    try:
+        assume_role_object = sts.assume_role(
+            RoleArn="arn:aws:iam::" + target_account + ":role/" + role,
+            RoleSessionName='AssumingCrossAccountRole'
+        )
+    except sts.exceptions.ClientError as err:
+        if "AccessDenied" in str(err):
+            logging.error(f"Account {target_account} does not have the required IAM role.")
+            print(f"Account {target_account} does not have the required IAM role.")
+        else:
+            logging.error(f"Error occurred while assuming role in account {target_account}: {err}")
+            print(f"Error occurred while assuming role in account {target_account}: {err}")
+        return False
+    
+    role_dict = dict()
+    role_dict['AccessKeyId'] = assume_role_object['Credentials']['AccessKeyId']
+    role_dict['SecretAccessKey'] = assume_role_object['Credentials']['SecretAccessKey']
+    role_dict['SessionToken'] = assume_role_object['Credentials']['SessionToken']
+    return role_dict
+
+# Function to get all regions
+def get_all_regions():
+    ec2 = boto3.client('ec2')
+    regions = ec2.describe_regions()['Regions']
+    return [region['RegionName'] for region in regions]
+
+# Function to get the list of volumes for given account and region
+def getallvolumes(act, client, region):
+    logging.info(f"Describing volumes for account {act} in region {region}")
+    response = client.describe_volumes(MaxResults=500)
+    volumeList = response.get("Volumes", [])
+    logging.info(f'Number of Volumes fetched in region {region}: {len(volumeList)}')
+    
+    if len(volumeList) != 0:
+        for vol in volumeList:
+            if "Tags" in vol:
+                tags = vol['Tags']
+            else:
+                tags = None
+            build_rows_dictionary(act, vol['VolumeId'], vol['Size'], vol['AvailabilityZone'], vol['VolumeType'], vol['State'], vol['CreateTime'], tags)
+        
+        while('NextToken' in response):
+            response = client.describe_volumes(MaxResults=500, NextToken=response['NextToken'])
+            volumeList = response.get("Volumes", [])
+            logging.info(f'Number of Volumes fetched in region {region}: {len(volumeList)}')
+            if len(volumeList) != 0:
+                for vol in volumeList:
+                    if "Tags" in vol:
+                        tags = vol['Tags']
+                    else:
+                        tags = None
+                    build_rows_dictionary(act, vol['VolumeId'], vol['Size'], vol['AvailabilityZone'], vol['VolumeType'], vol['State'], vol['CreateTime'], tags)
+    # Removed the region-wise "No volumes found" messages.
+
+# Function to build dictionary with required fields on volumes
+def build_rows_dictionary(account, volume_id, volume_size, availability_zone, volume_type, state, create_time, tags):
+    row_dict = {}
+    row_dict["Account"] = account
+    row_dict["Volume_Id"] = volume_id
+    row_dict["Volume_Size"] = volume_size
+    row_dict["Availability_Zone"] = availability_zone
+    row_dict["Volume_Type"] = volume_type
+    row_dict["State"] = state
+    row_dict["CreateTime"] = create_time
+    if tags:
+        for x in tags:
+            if x['Key'] == "Owner":
+                row_dict["Owner"] = x['Value']
+            elif x['Key'] == "Team":
+                row_dict["Team"] = x['Value']
+            elif x['Key'] == "instance_id":
+                row_dict["Instance_Id"] = x['Value']
+    rows.append(row_dict)
+
+# Function to write dictionary to CSV
+def write_csv(filepath):
+    with open(filepath, 'w') as f:
+        csv_writer = csv.DictWriter(f, fieldnames=field_names)
+        csv_writer.writeheader()
+        csv_writer.writerows(rows)
+    print(f'CSV file is created at {filepath}')
+
+def main():
+    sts_client = boto3.client("sts")
+    current_account = sts_client.get_caller_identity()["Account"]
+    
+    # Get list of all regions
+    regions = get_all_regions()
+
+    # Initialize counters for accounts and volumes
+    total_volumes = 0
+    total_accounts = 0
+
+    if arole:
+        accounts = getallAccounts()
+        logging.info(f'Accounts found --> {len(accounts)}')
+        for act in accounts:
+            if act == current_account or act == None:
+                logging.info("Account number " + act)
+            else:
+                logging.info("Account number " + act)
+                credentials = assume_role(act, arole)
+                if credentials:
+                    total_accounts += 1
+                    try:
+                        for region in regions:
+                            client = boto3.client('ec2', 
+                                region_name=region,
+                                aws_access_key_id=credentials['AccessKeyId'],
+                                aws_secret_access_key=credentials['SecretAccessKey'],
+                                aws_session_token=credentials['SessionToken'])
+                            getallvolumes(act, client, region)
+                    except Exception as e:
+                        logging.info(f"Can't assume the role in account {act}: {e}")
+                        continue
+    else:
+        for region in regions:
+            client = boto3.client('ec2', region_name=region)
+            getallvolumes(current_account, client, region)
+
+    # Log and print the total volumes and accounts processed
+    total_volumes = len(rows)
+    print(f"Summary: {total_volumes} volumes fetched from {total_accounts} accounts.")
+    logging.info(f"Summary: {total_volumes} volumes fetched from {total_accounts} accounts.")
+    
+    if rows:
+        write_csv(file)
+    else:
+        print("No volumes found across all accounts.")
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Creates a CSV report about EBS volumes across specific accounts and regions.')
+    parser.add_argument('--file', required=True, help='Path for output CSV file')
+    parser.add_argument('--role', required=False, help='IAM role that script can assume in other accounts')
+    try:
+        args = parser.parse_args()
+        file = args.file
+        arole = args.role
+    except NameError:
+        logging.error("Required arguments are missing. Please provide path for the file")
+
+    if os.path.exists(file):
+        raise Exception("File already exists!")
+    else:
+        main()

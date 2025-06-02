@@ -1,0 +1,88 @@
+import boto3
+import subprocess, csv, os
+import argparse, logging
+from datetime import datetime, timezone
+
+# Enable Logging
+logging.basicConfig(filename='S3MultipartOlderThan7Days.log', level=logging.INFO)
+
+# Define fields for CSV
+field_names = ['Account', 'BucketName', 'Region', 'Key', 'Initiated', 'AgeInDays', 'StorageClass']
+rows = []
+
+# Clear terminal
+subprocess.call(["clear"], shell=True)
+
+# Define the list of specific accounts
+specific_accounts = [
+    "==========Account ID==========="
+]
+
+def getallAccounts():
+    print('Fetching S3 Multipart Upload Report from Predefined AWS Accounts')
+    logging.info(f"Using the predefined account list: {specific_accounts}")
+    return specific_accounts
+
+def assume_role(target_account, role):
+    sts = boto3.client('sts')
+    try:
+        assumed = sts.assume_role(
+            RoleArn=f"arn:aws:iam::{target_account}:role/{role}",
+            RoleSessionName='CrossAccountS3MultipartCheck'
+        )
+    except sts.exceptions.ClientError as err:
+        logging.error(f"Error assuming role in account {target_account}: {err}")
+        print(f"Error assuming role in account {target_account}: {err}")
+        return False
+
+    return {
+        'AccessKeyId': assumed['Credentials']['AccessKeyId'],
+        'SecretAccessKey': assumed['Credentials']['SecretAccessKey'],
+        'SessionToken': assumed['Credentials']['SessionToken']
+    }
+
+def get_bucket_region(client, bucket_name):
+    try:
+        response = client.get_bucket_location(Bucket=bucket_name)
+        loc = response.get('LocationConstraint')
+        return loc if loc else 'us-east-1'
+    except Exception as e:
+        logging.error(f"Error getting location for bucket {bucket_name}: {e}")
+        return None
+
+def check_multipart_uploads(account, s3_client, bucket, region):
+    try:
+        paginator = s3_client.get_paginator('list_multipart_uploads')
+        for page in paginator.paginate(Bucket=bucket):
+            for upload in page.get('Uploads', []):
+                initiated = upload['Initiated']
+                age = (datetime.now(timezone.utc) - initiated).days
+                if age > 7:
+                    rows.append({
+                        'Account': account,
+                        'BucketName': bucket,
+                        'Region': region,
+                        'Key': upload['Key'],
+                        'Initiated': initiated.isoformat(),
+                        'AgeInDays': age,
+                        'StorageClass': upload.get('StorageClass', 'STANDARD')
+                    })
+    except s3_client.exceptions.NoSuchUpload:
+        pass
+    except Exception as e:
+        logging.error(f"Error checking multipart uploads in bucket {bucket} (Account {account}): {e}")
+
+def write_csv(filepath):
+    with open(filepath, 'w') as f:
+        writer = csv.DictWriter(f, fieldnames=field_names)
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f"CSV written to {filepath}")
+
+def main():
+    sts_client = boto3.client("sts")
+    current_account = sts_client.get_caller_identity()["Account"]
+    total_accounts = 0
+
+    if arole:
+        accounts = getall

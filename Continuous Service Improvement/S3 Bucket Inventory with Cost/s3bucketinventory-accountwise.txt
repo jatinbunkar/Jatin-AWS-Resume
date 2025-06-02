@@ -1,0 +1,124 @@
+import boto3
+import csv
+from collections import defaultdict
+
+ROLE_NAME = "OrganizationAccountAccessRole"  # Role name to assume in member accounts
+OUTPUT_FILE = "s3_bucket_inventory_with_cost.csv"
+ACCOUNT_IDS = ["123456789012", "987654321098"]  # Define the specific account IDs here
+
+# Static pricing map for each storage class (in USD per GB per month)
+pricing = {
+    "STANDARD": 0.023,
+    "INTELLIGENT_TIERING": 0.023,
+    "ONEZONE_IA": 0.01,
+    "GLACIER": 0.004,
+    "DEEP_ARCHIVE": 0.00099
+}
+
+def assume_role(account_id):
+    """Assume a role in a member account to get temporary credentials."""
+    sts = boto3.client('sts')
+    try:
+        resp = sts.assume_role(
+            RoleArn=f"arn:aws:iam::{account_id}:role/{ROLE_NAME}",
+            RoleSessionName="S3InventorySession"
+        )
+        return resp['Credentials']
+    except Exception as e:
+        print(f"[ERROR] Cannot assume role in {account_id}: {e}")
+        return None
+
+def get_bucket_region(s3_client, bucket_name):
+    """Get the region of an S3 bucket."""
+    try:
+        response = s3_client.get_bucket_location(Bucket=bucket_name)
+        loc = response.get("LocationConstraint")
+        return loc if loc else "us-east-1"
+    except Exception:
+        return "unknown"
+
+def analyze_buckets(account_id, account_name, credentials):
+    """Analyze S3 buckets in a specific account."""
+    s3 = boto3.client('s3',
+        aws_access_key_id=credentials['AccessKeyId'],
+        aws_secret_access_key=credentials['SecretAccessKey'],
+        aws_session_token=credentials['SessionToken']
+    )
+
+    response = s3.list_buckets()
+    inventory = []
+
+    for bucket in response['Buckets']:
+        bucket_name = bucket['Name']
+        region = get_bucket_region(s3, bucket_name)
+
+        # Connect to the S3 client in the correct region
+        s3_regional = boto3.client('s3',
+            region_name=region,
+            aws_access_key_id=credentials['AccessKeyId'],
+            aws_secret_access_key=credentials['SecretAccessKey'],
+            aws_session_token=credentials['SessionToken']
+        )
+
+        storage_data = defaultdict(lambda: {'Size': 0, 'Count': 0})
+
+        try:
+            paginator = s3_regional.get_paginator('list_objects_v2')
+            for page in paginator.paginate(Bucket=bucket_name):
+                for obj in page.get('Contents', []):
+                    sc = obj.get('StorageClass', 'STANDARD')
+                    size = obj.get('Size', 0)
+                    storage_data[sc]['Size'] += size
+                    storage_data[sc]['Count'] += 1
+        except Exception as e:
+            print(f"[WARNING] Skipping bucket {bucket_name} in {account_id}: {e}")
+            continue
+
+        for sc, data in storage_data.items():
+            size_gb = data['Size'] / (1024 ** 3)  # Convert size from bytes to GB
+            cost_per_gb = pricing.get(sc.upper(), 0.023)  # Default to STANDARD if unknown
+            estimated_cost = size_gb * cost_per_gb
+
+            inventory.append({
+                "AccountId": account_id,
+                "AccountName": account_name,
+                "BucketName": bucket_name,
+                "Region": region,
+                "StorageClass": sc,
+                "ObjectCount": data['Count'],
+                "TotalSizeBytes": data['Size'],
+                "EstimatedMonthlyCostUSD": round(estimated_cost, 4)
+            })
+
+    return inventory
+
+def write_csv(results):
+    """Write results to a CSV file."""
+    with open(OUTPUT_FILE, 'w', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=[
+            "AccountId", "AccountName", "BucketName", "Region",
+            "StorageClass", "ObjectCount", "TotalSizeBytes", "EstimatedMonthlyCostUSD"
+        ])
+        writer.writeheader()
+        writer.writerows(results)
+    print(f"[INFO] Report written to {OUTPUT_FILE}")
+
+def main():
+    """Main function to generate the S3 inventory report."""
+    results = []
+    
+    # Process only the manually defined accounts
+    for account_id in ACCOUNT_IDS:
+        print(f"[INFO] Processing account {account_id}")
+        creds = assume_role(account_id)
+        if creds:
+            account_results = analyze_buckets(account_id, f"Account-{account_id}", creds)
+            results.extend(account_results)
+
+    if results:
+        write_csv(results)
+    else:
+        print("[INFO] No bucket data collected.")
+
+if __name__ == '__main__':
+    main()

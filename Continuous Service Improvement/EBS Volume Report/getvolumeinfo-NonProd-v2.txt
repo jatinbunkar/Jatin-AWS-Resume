@@ -1,0 +1,178 @@
+import boto3
+import subprocess, csv, os
+import argparse, logging
+from datetime import datetime
+
+# Enable Logging
+logging.basicConfig(filename='GetVolumeDetailsPredefinedAccounts.log', level=logging.INFO)
+
+subprocess.call(["clear"], shell=True)
+
+# Output CSV headers
+field_names = ['Account', 'Volume_Id', 'Volume_Size', 'Availability_Zone', 'Volume_Type', 'State', 'CreateTime',
+               'Owner', 'Team', 'Instance_Id', 'Instance_Name']
+rows = []
+
+# Manually defined accounts
+specific_accounts = ["675637567284"]
+
+def getallAccounts():
+    print('Fetching Volume Report from Predefined AWS Accounts')
+    logging.info(f"Using the predefined account list: {specific_accounts}")
+    return specific_accounts
+
+def assume_role(target_account, role):
+    sts = boto3.client('sts')
+    try:
+        assume_role_object = sts.assume_role(
+            RoleArn=f"arn:aws:iam::{target_account}:role/{role}",
+            RoleSessionName='AssumingCrossAccountRole'
+        )
+    except sts.exceptions.ClientError as err:
+        logging.error(f"Error assuming role in account {target_account}: {err}")
+        print(f"Error assuming role in account {target_account}: {err}")
+        return False
+
+    return {
+        'AccessKeyId': assume_role_object['Credentials']['AccessKeyId'],
+        'SecretAccessKey': assume_role_object['Credentials']['SecretAccessKey'],
+        'SessionToken': assume_role_object['Credentials']['SessionToken']
+    }
+
+def get_all_regions():
+    ec2 = boto3.client('ec2')
+    regions = ec2.describe_regions()['Regions']
+    return [region['RegionName'] for region in regions]
+
+def get_attachment_history(volume_id, region, credentials):
+    trail_client = boto3.client('cloudtrail',
+                                region_name=region,
+                                aws_access_key_id=credentials['AccessKeyId'],
+                                aws_secret_access_key=credentials['SecretAccessKey'],
+                                aws_session_token=credentials['SessionToken'])
+    try:
+        response = trail_client.lookup_events(
+            LookupAttributes=[
+                {
+                    'AttributeKey': 'ResourceName',
+                    'AttributeValue': volume_id
+                }
+            ],
+            MaxResults=10
+        )
+        for event in response['Events']:
+            if event['EventName'] == 'AttachVolume':
+                resources = event['Resources']
+                for res in resources:
+                    if res['ResourceType'] == 'AWS::EC2::Instance':
+                        return {
+                            'InstanceId': res['ResourceName'],
+                            'EventTime': event['EventTime']
+                        }
+    except Exception as e:
+        logging.warning(f"CloudTrail query failed for volume {volume_id} in region {region}: {e}")
+    return None
+
+def getallvolumes(account, client, region, credentials):
+    logging.info(f"Describing volumes for account {account} in region {region}")
+    paginator = client.get_paginator('describe_volumes')
+    for page in paginator.paginate(MaxResults=500):
+        for vol in page.get("Volumes", []):
+            tags = vol.get('Tags', [])
+            build_rows_dictionary(account, vol, tags, client, region, credentials)
+
+def build_rows_dictionary(account, vol, tags, ec2_client, region, credentials):
+    volume_id = vol['VolumeId']
+    row_dict = {
+        "Account": account,
+        "Volume_Id": volume_id,
+        "Volume_Size": vol['Size'],
+        "Availability_Zone": vol['AvailabilityZone'],
+        "Volume_Type": vol['VolumeType'],
+        "State": vol['State'],
+        "CreateTime": vol['CreateTime'],
+        "Owner": "",
+        "Team": "",
+        "Instance_Id": "Not attached to any instance",
+        "Instance_Name": "Not attached to any instance"
+    }
+
+    if "Attachments" in vol and vol["Attachments"]:
+        instance_id = vol["Attachments"][0].get("InstanceId")
+        try:
+            instance = ec2_client.describe_instances(InstanceIds=[instance_id])
+            instance_tags = instance['Reservations'][0]['Instances'][0].get("Tags", [])
+            instance_name = next((t["Value"] for t in instance_tags if t["Key"] == "Name"), None)
+            row_dict["Instance_Id"] = instance_id
+            row_dict["Instance_Name"] = instance_name or "Name tag not found"
+        except Exception as e:
+            logging.warning(f"Failed to get instance name for {instance_id}: {e}")
+            row_dict["Instance_Id"] = instance_id
+    else:
+        history = get_attachment_history(volume_id, region, credentials)
+        if history:
+            row_dict["Instance_Id"] = history["InstanceId"] + " (from CloudTrail)"
+            row_dict["Instance_Name"] = "Previously attached (from CloudTrail)"
+
+    for tag in tags:
+        key = tag["Key"].lower()
+        if key == "owner":
+            row_dict["Owner"] = tag["Value"]
+        elif key == "team":
+            row_dict["Team"] = tag["Value"]
+
+    rows.append(row_dict)
+
+def write_csv(filepath):
+    with open(filepath, 'w', newline='') as f:
+        writer = csv.DictWriter(f, fieldnames=field_names)
+        writer.writeheader()
+        writer.writerows(rows)
+    print(f'CSV created at {filepath}')
+
+def main():
+    sts_client = boto3.client("sts")
+    current_account = sts_client.get_caller_identity()["Account"]
+    regions = get_all_regions()
+    total_accounts = 0
+
+    if arole:
+        accounts = getallAccounts()
+        for account in accounts:
+            if account == current_account:
+                continue
+            credentials = assume_role(account, arole)
+            if not credentials:
+                continue
+            total_accounts += 1
+            for region in regions:
+                client = boto3.client('ec2',
+                                      region_name=region,
+                                      aws_access_key_id=credentials['AccessKeyId'],
+                                      aws_secret_access_key=credentials['SecretAccessKey'],
+                                      aws_session_token=credentials['SessionToken'])
+                getallvolumes(account, client, region, credentials)
+    else:
+        for region in regions:
+            client = boto3.client('ec2', region_name=region)
+            getallvolumes(current_account, client, region, {})
+
+    print(f"Summary: {len(rows)} volumes fetched from {total_accounts} accounts.")
+    if rows:
+        write_csv(file)
+    else:
+        print("No volume data found.")
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Fetch EBS volume details across AWS accounts.')
+    parser.add_argument('--file', required=True, help='Output CSV file path')
+    parser.add_argument('--role', required=False, help='IAM role to assume in other accounts')
+
+    args = parser.parse_args()
+    file = args.file
+    arole = args.role
+
+    if os.path.exists(file):
+        raise Exception("File already exists. Please choose a different filename.")
+    else:
+        main()
