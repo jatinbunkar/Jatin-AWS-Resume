@@ -1,123 +1,107 @@
 # 👨‍💻 Jatin Bunkar
 
-**Location:** Pune, Maharashtra, India  
-**Email:** [jatinbunkar274@gmail.com](mailto:jatinbunkar274@gmail.com)  
-**Phone:** (+91) 9009555080  
-**LinkedIn:** [linkedin.com/in/yourprofile](#)  
+📍 Pune, Maharashtra, India  
+📧 [jatinbunkar274@gmail.com](mailto:jatinbunkar274@gmail.com)  
+📞 (+91) 9009555080  
+🔗 [LinkedIn](https://linkedin.com/in/your-profile) | [GitHub](https://github.com/your-profile)
 
 ---
 
 ## 🎯 Career Summary
 
-Results‑oriented **AWS Cloud Engineer** with **2.9+ years** of experience managing scalable AWS infrastructure, automating cloud operations, and optimizing costs. Proven ability in **multi‑account governance**, **Python automation**, resource governance, and cross‑account orchestration. Passionate about infrastructure as code, cost control, and streamlining operations through automation. **3× AWS Certified** and recognized for delivering measurable results and driving continuous improvement.
+Results‑oriented **AWS Cloud Engineer** with **2.9+ years** of experience managing scalable AWS infrastructure, automating cloud operations, and optimizing costs. Skilled in **multi-account AWS environments**, **Python automation**, and **cross-account orchestration**. Passionate about Infrastructure as Code, cost control, and continuous improvement.  
+**3× AWS Certified** | Automation‑Focused | Cost Optimization Champion
 
 ---
 
 ## 🎓 Education
 
-**SIRT College, Bhopal, Madhya Pradesh**  
-_Bachelor of Technology – Electronics & Communication Engineering_  
-**CGPA:** 7.80 | **2018 – 2022**
+**Sagar Institute of Research & Technology (SIRT)** — Bhopal, MP  
+_Bachelor of Technology (Electronics & Communication Engineering)_  
+📅 **2018 – 2022** | 🎯 **CGPA:** 7.80
 
 ---
 
 ## 🏅 Certifications
 
-| Certification | Date Achieved |
-|---------------|---------------|
-| AWS Certified SysOps Administrator – Associate | Jan 30, 2025 |
-| AWS Certified Solutions Architect – Associate | Oct 19, 2023 |
-| AWS Certified Cloud Practitioner | Jan 14, 2023 |
+- 🧠 **AWS Certified SysOps Administrator – Associate** (Jan 2025)  
+- 🧠 **AWS Certified Solutions Architect – Associate** (Oct 2023)  
+- 🧠 **AWS Certified Cloud Practitioner** (Jan 2023)
 
 ---
 
-## 🧪 Technical Projects – [GitHub Portfolio](#)
+## 💻 Technical Projects ([GitHub Portfolio](https://github.com/your-profile))
 
-- **Serverless EC2 Instance Scheduler for Company Working Hours**  
-  Built a serverless EC2 scheduler using AWS Lambda and EventBridge to optimize instance usage and reduce costs.
+- 🔧 **Serverless EC2 Instance Scheduler**  
+  ⮞ AWS Lambda + EventBridge to start/stop EC2 during business hours to cut costs.
 
-- **Cross‑Account EBS Volume Cleanup**  
-  Python script with IAM roles to identify and delete unused EBS volumes across AWS Org accounts.
+- 📦 **Cross-Account EBS Volume Cleanup**  
+  ⮞ Python + Boto3 + IAM Roles to find/delete unused EBS volumes across AWS Org.
 
-- **S3 Multipart Upload Cleaner**  
-  Detected and deleted stale multipart uploads older than 7 days using S3 APIs and Boto3.
+- 🧹 **S3 Multipart Upload Cleaner**  
+  ⮞ Script to delete stale multipart uploads older than 7 days using Boto3.
 
-- **Automated EBS Volume Deletion Across Organizational Accounts**  
-  Automated unused EBS volume deletion using Python scripts with cross-account roles and secure IAM policies.
+- 🧼 **EBS Volume Cleanup Across Org**  
+  ⮞ Secure Python automation to delete 'available' state EBS volumes Org-wide.
 
-- **AWS Text‑to‑Speech Converter using Amazon Polly**  
-  Developed a text-to-speech application using Amazon Polly and Python, automating audio generation and S3 storage.
+- 🗣️ **Text-to-Speech App using AWS Polly**  
+  ⮞ Converts text to speech and stores output audio in S3 automatically.
 
-- **Automated Image Resizing and Transfer System Using AWS Services**  
-  Created a serverless system using AWS Lambda and S3 for automatic image resizing and optimized file storage.
-
----
-
-## 💼 Work Experience
-
-### Cognizant — Cloud Engineer (Tech Lead)  
-**Aug 2022 – Present**
-
-#### Project: United Natural Foods, Inc (UNFI)
-
-**Infrastructure Management & Cloud Administration**  
-- Managed 50+ AWS accounts across production, development, and sandbox environments.  
-- Automated patching and updates using AWS Systems Manager (SSM).  
-- Provisioned cloud infrastructure: VPC, EC2, EBS, ELB, IAM, RDS, S3, Auto Scaling.  
-- Designed secure VPC architectures using subnets, NAT Gateways, Transit Gateways, and route tables.
-
-**Cost Optimization & Operational Efficiency**  
-- Delivered **$17,650+** in confirmed savings in 2024 through:
-  - Rightsizing and decommissioning Kafka (MSK), Redshift, RDS instances, and unused EC2 volumes.  
-  - Saved $3,627 in April, $3,800 in June, and $5,189 in July.
-- Used AWS Trusted Advisor, Billing, and Cost Optimization Hub to audit and reduce spend.  
-- Implemented EC2 scheduling, idle snapshot & EBS removal, and cleanup of unused Elastic IPs and ENIs.
-
-**Automation & Continuous Service Improvements**  
-- Developed automated scripts using Python (Boto3) and AWS Lambda to:
-  - Fetch and delete idle EBS volumes, old snapshots, RDS manual snapshots, orphan ENIs, and stale multipart uploads.  
-  - Send EC2 reboot email notifications to reduce incident response time.  
-- Reduced manual overhead by eliminating redundant resources via serverless automation.
+- 🖼️ **Automated Image Resizing**  
+  ⮞ AWS Lambda + S3 system to resize and manage images serverlessly.
 
 ---
 
-#### Project: Onvida AWS Migration
+## 🏢 Work Experience
 
-- Managed AWS infrastructure deployment and administration using CloudFormation.  
-- Administered 10+ AWS accounts: Multi-Prod, Multi-Dev, Multi-Stage, Pep-Prod, Pep-Dev, Pep-Stage, Shared, Network, Logging, Security.  
-- Handled EC2, S3, EBS, VPC, ELB, AMI, SNS, RDS, IAM, Auto Scaling, CloudWatch, CloudTrail, and CloudFormation.  
-- Designed and configured VPC architectures (route tables, subnets, IGWs, NACLs, NAT & Transit Gateways).  
-- Used SSM Distributor and Run Command for efficient server management.  
-- Implemented Cross-Region Replication using AWS DataSync and Lambda.  
-- Created SOPs, Runbooks, Low-Level & High-Level Design (LLD/HLD), and Disaster Recovery (DR) documentation.
+### **Cloud Engineer (Tech Lead)** – Cognizant  
+📅 **Aug 2022 – Present**  
+**Client:** United Natural Foods, Inc (UNFI)
+
+#### 🚀 Infrastructure Management
+- Managed **50+ AWS accounts** across multiple environments.
+- Provisioned resources like **VPC, EC2, RDS, IAM, ELB, S3, EBS**.
+- Designed secure VPCs with **NAT Gateways, TGWs, subnets, route tables**.
+- Automated patching & updates via **AWS SSM**.
+
+#### 💸 Cost Optimization
+- Saved **$17,650+** in 2024 via:
+  - Decommissioning idle **MSK, Redshift, RDS, EC2**.
+  - Monthly savings: April – $3.6K, June – $3.8K, July – $5.1K+
+- Used **Trusted Advisor, Billing Hub, Optimization Hub** for spend control.
+- Implemented **EC2 schedules, EBS cleanup, unused ENI removal**.
+
+#### 🤖 Automation & Continuous Improvement
+- Developed Python + Lambda tools to:
+  - Delete idle EBS, snapshots, multipart uploads, RDS backups.
+  - Notify via email on EC2 reboots.
+- Reduced manual overhead using **serverless automation**.
 
 ---
 
-## 🛠 Technical Skills
+### **Project:** Onvida AWS Migration
 
-**Cloud Platform:**  
-AWS  
+- Provisioned infrastructure using **CloudFormation** (IaC).
+- Managed 10+ AWS accounts: Multi-Prod/Dev/Stage, Shared, Network, Security.
+- Administered services: **EC2, S3, EBS, VPC, ELB, AMI, SNS, IAM, Auto Scaling**.
+- Configured secure **VPC architectures**, route tables, NACLs, IGWs, TGWs.
+- Leveraged **SSM Distributor** + **Run Command** for automation.
+- Built **Cross-Region DataSync** with Lambda triggers.
+- Authored **SOPs, HLD/LLD, DR documents**.
 
-**Core Services:**  
-EC2, EBS, S3, Lambda, RDS, Redshift, IAM, VPC, SSM, CloudWatch, CloudTrail, ELB, Auto Scaling, SNS, EKS  
+---
 
-**Infrastructure as Code:**  
-CloudFormation  
+## 🧰 Technical Skills
 
-**Automation & Scripting:**  
-Python (Boto3), Bash, Lambda, EventBridge, SSM Documents  
-
-**Monitoring & Logging:**  
-CloudWatch, CloudTrail  
-
-**Cost Optimization:**  
-AWS Cost Explorer, Billing Reports, Optimization Hub  
-
-**Security & Governance:**  
-IAM Policies, Security Groups  
-
-**CI/CD & DevOps Tools:**  
-GitHub Actions (Basic), Shell Scripting  
+| Domain                | Tools & Technologies |
+|-----------------------|----------------------|
+| ☁️ **Cloud Platform** | AWS |
+| 🧱 **Core Services** | EC2, S3, EBS, Lambda, RDS, Redshift, IAM, VPC, ELB, SSM, Auto Scaling, CloudWatch, CloudTrail, SNS, EKS |
+| 🛠️ **IaC & Automation** | CloudFormation, Python (Boto3), Bash, Lambda, EventBridge, SSM Documents |
+| 📊 **Monitoring** | CloudWatch, CloudTrail |
+| 💰 **Cost Control** | Cost Explorer, Billing Hub, Optimization Hub |
+| 🔐 **Security** | IAM Policies, Security Groups |
+| 🚀 **DevOps** | GitHub Actions (Basic), Shell Scripting |
 
 ---
 
