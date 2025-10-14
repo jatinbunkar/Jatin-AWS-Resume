@@ -157,7 +157,8 @@ Create the project structure:
 -   Environment variables set root password and database name
     
 
-**Screenshot placeholder:** <img width="631" height="308" alt="image" src="https://github.com/user-attachments/assets/9a035743-16d2-4f1b-9790-c0f4bfd6f8dc" />
+**Screenshot placeholder:** 
+<img width="631" height="308" alt="image" src="https://github.com/user-attachments/assets/9a035743-16d2-4f1b-9790-c0f4bfd6f8dc" />
 
 
 * * *
@@ -203,7 +204,7 @@ Create the project structure:
     -   `mysql_data:/var/lib/mysql` → persistent MySQL data
         
 
-**Screenshot placeholder:** `screenshots/docker-compose.png`
+
 
 * * *
 
@@ -213,6 +214,12 @@ Create the project structure:
     
 
 `cd ~/notes-app sudo docker-compose up -d --build`
+
+
+**Screenshot placeholder:** 
+<img width="1156" height="696" alt="image" src="https://github.com/user-attachments/assets/29e378f6-d3e5-49d0-91b2-73b5b548a98f" />
+
+<img width="1119" height="464" alt="image" src="https://github.com/user-attachments/assets/4d661fce-5de3-484e-ad2e-7a6628e4f9e2" />
 
 2.  Verify containers:
     
@@ -229,7 +236,11 @@ Create the project structure:
 
 `sudo docker exec -it mysql_db mysql -uroot -prootpassword -e "USE notesdb; SELECT * FROM notes;"`
 
-**Screenshot placeholder:** `screenshots/app-running.png`
+**Screenshot placeholder:** 
+<img width="1440" height="557" alt="image" src="https://github.com/user-attachments/assets/a38d9225-78c8-4185-b232-5d7c7fd829f6" />
+
+<img width="646" height="463" alt="image" src="https://github.com/user-attachments/assets/0019946c-f9da-4706-93e0-3d48aafa0626" />
+
 
 * * *
 
@@ -240,9 +251,4 @@ Create the project structure:
 
 `sudo docker exec -it mysql_db mysql -uroot -prootpassword -e "USE notesdb; TRUNCATE TABLE notes;"`
 
--   Or recreate database volume:
-    
 
-`sudo docker-compose down sudo docker volume rm notes-app_mysql_data sudo docker-compose up -d`
-
-**Screenshot placeholder:** `screenshots/reset-app.png`
