@@ -37,7 +37,8 @@ Develop a **secure, two-tier notes saving web application** using **Docker, F
 
 **Screenshots:**
 
--   UI Screenshot → `screenshots/notes-ui.png`
+-   UI Screenshot → `screenshots/notes-ui.png` <img width="1440" height="503" alt="image" src="https://github.com/user-attachments/assets/0aa3a5f6-47ea-4916-a73e-679f0487e501" />
+
     
 -   Architecture Diagram → `screenshots/architecture.png`
     
