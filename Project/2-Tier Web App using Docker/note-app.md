@@ -1,4 +1,4 @@
-# **Notes App Project — SOP (Updated with Resources)**
+# **Notes App Project using Docker**
 
 * * *
 
