@@ -37,10 +37,11 @@ Develop a **secure, two-tier notes saving web application** using **Docker, F
 
 **Screenshots:**
 
--   UI Screenshot → `screenshots/notes-ui.png` <img width="1440" height="503" alt="image" src="https://github.com/user-attachments/assets/0aa3a5f6-47ea-4916-a73e-679f0487e501" />
+-   UI Screenshot →  <img width="1440" height="503" alt="image" src="https://github.com/user-attachments/assets/0aa3a5f6-47ea-4916-a73e-679f0487e501" />
 
     
--   Architecture Diagram → `screenshots/architecture.png`
+-   Architecture Diagram → <img width="808" height="804" alt="image" src="https://github.com/user-attachments/assets/e545b803-5cdd-457f-b7ae-7d5775959223" />
+
     
 
 * * *
@@ -65,12 +66,12 @@ Develop a **secure, two-tier notes saving web application** using **Docker, F
         
     -   Outbound: All traffic
         
-3.  Connect via **AWS SSM**:
+3.  Connect via **AWS Session Manager**:
+
     
 
-`aws ssm start-session --target i-0179a0233ed5ae485`
 
-**Screenshot placeholder:** `screenshots/ec2-setup.png`
+**Screenshot placeholder:** <img width="1273" height="685" alt="image" src="https://github.com/user-attachments/assets/4c0e99a2-5cec-4680-93f8-c75e196591ce" />
 
 * * *
 
@@ -87,7 +88,8 @@ Develop a **secure, two-tier notes saving web application** using **Docker, F
 5.  Health check path: `/`
     
 
-**Screenshot placeholder:** `screenshots/alb-setup.png`
+**Screenshot placeholder:** <img width="1237" height="660" alt="image" src="https://github.com/user-attachments/assets/5d93467b-4857-4343-9b5a-9c36064c8096" />
+
 
 * * *
 
@@ -100,7 +102,10 @@ Develop a **secure, two-tier notes saving web application** using **Docker, F
 
 `docker --version docker-compose --version`
 
-**Screenshot placeholder:** `screenshots/docker-install.png`
+**Screenshot placeholder:** <img width="944" height="758" alt="image" src="https://github.com/user-attachments/assets/2418b317-02c2-45cc-9704-703bd3eeaf68" />
+<img width="631" height="426" alt="image" src="https://github.com/user-attachments/assets/4bceb201-c1e2-4e66-adc6-b0bd5527ff36" />
+
+
 
 * * *
 
@@ -110,7 +115,8 @@ Create the project structure:
 
 `notes-app/ ├── app/ │   ├── app.py │   ├── requirements.txt │   └── templates/index.html ├── db/init.sql ├── nginx/default.conf ├── Dockerfile ├── docker-compose.yml └── README.md`
 
-**Screenshot placeholder:** `screenshots/project-structure.png`
+**Screenshot placeholder:** <img width="702" height="70" alt="image" src="https://github.com/user-attachments/assets/90cd1b0c-f2a2-4546-91af-13464050f1db" />
+
 
 * * *
 
@@ -134,7 +140,8 @@ Create the project structure:
     
 -   Responsive, clean design
     
--   Screenshot: `screenshots/notes-ui.png`
+-   Screenshot: <img width="1440" height="373" alt="image" src="https://github.com/user-attachments/assets/b4533387-92c1-4fe2-bb47-b0cd9c9a9d4d" />
+
     
 
 * * *
@@ -150,7 +157,8 @@ Create the project structure:
 -   Environment variables set root password and database name
     
 
-**Screenshot placeholder:** `screenshots/mysql-setup.png`
+**Screenshot placeholder:** <img width="631" height="308" alt="image" src="https://github.com/user-attachments/assets/9a035743-16d2-4f1b-9790-c0f4bfd6f8dc" />
+
 
 * * *
 
