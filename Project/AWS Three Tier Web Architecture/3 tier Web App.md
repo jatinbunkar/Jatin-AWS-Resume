@@ -7,9 +7,6 @@ AWS Three Tier Web Architecture
 
 This project is a hands-on walk through of a three-tier web architecture in AWS. We will be manually creating the necessary network, security, app, and database components and configurations in order to run this architecture in an available and scalable manner.
 
-## Audience:
-
-It is intended for those who have a technical role. The assumption is that you have at least some foundational aws knowledge around VPC, EC2, RDS, S3, ELB and the AWS Console.
 
 ## Pre-requisites:
 
@@ -406,8 +403,6 @@ You should see a response containing the test data we added earlier:
 }
 ```
 
-
-
 <img width="1440" height="688" alt="image" src="https://github.com/user-attachments/assets/5038275b-f0e1-4f56-bac8-3c9253c2d359" />
 
 <img width="789" height="106" alt="image" src="https://github.com/user-attachments/assets/26078533-d94b-4e54-98ec-7f70ad751fd9" />
@@ -426,15 +421,17 @@ In this section,we will create an Amazon Machine Image (AMI) of the app tier ins
   - Configure Autoscaling
   - Deploy Internal Load Balancer
 
+<img width="1242" height="660" alt="image" src="https://github.com/user-attachments/assets/c6ece706-1ece-400d-90be-392fe79bf1dd" />
+
+
 ### App Tier AMI
 
 1. Navigate to Instances on the left hand side of the EC2 dashboard. Select the app tier instance we created and under Actions select Image and templates. Click Create Image.
 
-   ![](/demos/CreateAMI1.png)
-
 2. Give the image a name and description and then click Create image. This will take a few minutes, but if you want to monitor the status of image creation you can see it by clicking AMIs under Images on the left hand navigation panel of the EC2 dashboard.
 
-   ![](/demos/CreateAMI2.png)
+<img width="1299" height="680" alt="image" src="https://github.com/user-attachments/assets/5825f785-e417-4890-aaec-617ee474cd8d" />
+
 
 ### Target Group
 
@@ -446,6 +443,9 @@ In this section,we will create an Amazon Machine Image (AMI) of the app tier ins
 
 3. We are NOT going to register any targets for now, so just skip that step and create the target group.
 
+<img width="1254" height="680" alt="image" src="https://github.com/user-attachments/assets/99864bac-6b14-499d-89a9-b234cc60c035" />
+
+
 ### Internal Load Balanceer
 
 1. On the left hand side of the EC2 dashboard select <b>Load Balancers</b> under <b>Load Balancing</b> and click <b>Create Load Balancer</b>.
@@ -454,15 +454,12 @@ In this section,we will create an Amazon Machine Image (AMI) of the app tier ins
 
 3. After giving the load balancer a name, be sure to select <b>internal</b> since this one will not be public facing, but rather it will route traffic from our web tier to the app tier.
 
-   ![](/demos/LBConfig1.png)
-
    Select the correct network configuration for VPC and private subnets.
-
-   ![](/demos/LBConfig2.png)
 
    Select the security group we created for this internal ALB. Now, this ALB will be listening for HTTP traffic on port 80. It will be forwarding the traffic to our <b>target group </b>that we just created, so select it from the dropdown, and create the load balancer.
 
-   ![](/demos/LBConfig3.png)<image>
+<img width="1241" height="658" alt="image" src="https://github.com/user-attachments/assets/f4d84fd7-51fb-4261-83a5-3f5da0901cae" />
+
 
 ### Launch Template
 
@@ -470,32 +467,24 @@ In this section,we will create an Amazon Machine Image (AMI) of the app tier ins
 
 2. Name the Launch Template, and then under <b>Application and OS Images</b> include the app tier AMI you created.
 
-   ![](/demos/LaunchTemplateConfig1.png)
 
    Under Instance Type select t2.micro. For Key pair and Network Settings don't include it in the template. We don't need a key pair to access our instances and we'll be setting the network information in the autoscaling group.
 
-   ![](/demos/LaunchTemplateConfig2.png)
 
    Set the correct security group for our app tier, and then under Advanced details use the same IAM instance profile we have been using for our EC2 instances.
 
-   ![](/demos/LaunchTemplateConfig3.png)
+<img width="845" height="554" alt="image" src="https://github.com/user-attachments/assets/7c127091-fbc2-43fe-887b-7de3163f09db" />
 
-   ![](/demos/LaunchTemplateConfig4.png)
 
 ### Auto Scaling
 
 1. We will now create the Auto Scaling Group for our app instances. On the left side of the EC2 dashboard navigate to <b>Auto Scaling Groups</b> under Auto Scaling and click <b>Create Auto Scaling group.</b>
 
 2. Give your Auto Scaling group a name, and then select the Launch Template we just created and click next.
-   ![](/demos/ConfigureASG1.png)
 
 3. On the <b>Choose instance launch</b> options page set your VPC, and the private instance subnets for the app tier and continue to step 3.
 
-   ![](/demos/ConfigureASG2.png)
-
 4. For this next step, attach this Auto Scaling Group to the Load Balancer we just created by selecting the existing load balancer's target group from the dropdown. Then, click next.
-
-   ![](/demos/ConfigureASG3.png)
 
 5. For Configure group size and scaling policies, set desired, minimum and maximum capacity to 2. Click skip to review and then Create Auto Scaling Group.
 
@@ -516,7 +505,8 @@ In this section we will deploy an EC2 instance for the web tier and make all nec
 
 Before we create and configure the web instances, open up the **application-code/nginx.conf** file from the repo we downloaded. Scroll down to **line 58** and replace `[INTERNAL-LOADBALANCER-DNS]` with your internal load balancer’s DNS entry. You can find this by navigating to your internal load balancer's details page.
 
-![](/demos/ReplaceCode.png)
+<img width="647" height="483" alt="image" src="https://github.com/user-attachments/assets/d42bb142-315b-483d-9632-55993f81c297" />
+
 
 Then, upload this file and the **application-code/web-tier** folder to the s3 bucket you created for this project.
 
@@ -524,11 +514,11 @@ Then, upload this file and the **application-code/web-tier** folder to the s3 bu
 
 1. Follow the same instance creation instructions we used for the App Tier instance in **Part 3: App Tier Instance Deployment**, with the exception of the subnet. We will be provisioning this instance in one of our **public subnets**. Make sure to select the correct network components, security group, and IAM role. **This time, auto-assign a public ip** on the **Configure Instance Details page**. Remember to tag the instance with a name so we can identify it more easily.
 
-   ![](/demos/WebInstanceCreate1.png)
-
-   ![](/demos/WebInstanceCreate2.png)
-
    Then at the end, proceed without a key pair for this instance.
+
+
+   <img width="1278" height="556" alt="image" src="https://github.com/user-attachments/assets/55778801-c222-4c2a-b8a8-6958cc300b78" />
+
 
 ### Connect to Instance
 
@@ -538,6 +528,7 @@ Then, upload this file and the **application-code/web-tier** folder to the s3 bu
    sudo -su ec2-user
    ping 8.8.8.8
    ```
+<img width="891" height="237" alt="image" src="https://github.com/user-attachments/assets/43b454b3-ac40-483d-9904-de38246712a6" />
 
    **Note**: _If you don't see a transfer of packets then you'll need to verify your route tables attached to the subnet that your instance is deployed in_.
 
@@ -603,11 +594,23 @@ Then, upload this file and the **application-code/web-tier** folder to the s3 bu
    sudo chkconfig nginx on
    ```
 
-5. Now when you plug in the public IP of your web tier instance, you should see your website, which you can find on the Instance details page on the EC2 dashboard. If you have the database connected and working correctly, then you will also see the database working. You’ll be able to add data. Careful with the delete button, that will clear all the entries in your database.
+   <img width="1062" height="562" alt="image" src="https://github.com/user-attachments/assets/e63bf9c8-2570-436d-ad25-917a25c8b86d" />
 
-   ![](/demos/WebPage1.png)
+   <img width="1000" height="661" alt="image" src="https://github.com/user-attachments/assets/86d7ad99-e071-4355-a386-c1202a90798f" />
 
-   ![](/demos/WebPage2.png)
+   <img width="1440" height="707" alt="image" src="https://github.com/user-attachments/assets/35e30e9c-bb5c-44de-b16e-35b25ea62a2b" />
+
+   <img width="1365" height="474" alt="image" src="https://github.com/user-attachments/assets/1f50a6be-9613-461a-ac53-66e6235a155a" />
+
+
+6. Now when you plug in the public IP of your web tier instance, you should see your website, which you can find on the Instance details page on the EC2 dashboard. If you have the database connected and working correctly, then you will also see the database working. You’ll be able to add data. Careful with the delete button, that will clear all the entries in your database.
+
+<img width="1440" height="805" alt="image" src="https://github.com/user-attachments/assets/41916f40-72da-49c4-8e9c-d95987abb940" />
+
+<img width="1440" height="783" alt="image" src="https://github.com/user-attachments/assets/a6bf7745-b74d-4e6e-8b99-cedafa00722d" />
+
+<img width="1440" height="799" alt="image" src="https://github.com/user-attachments/assets/490e4a40-3ddc-4883-9b1e-53e4cd9267ea" />
+
 
 ## External Load Balancer and Auto Scaling - Part 6
 
@@ -652,8 +655,6 @@ In this section of the workshop we will create an Amazon Machine Image (AMI) of 
 1. Before we configure Auto Scaling, we need to create a Launch template with the AMI we created earlier. On the left side of the EC2 dashboard navigate to **Launch Template** under **Instances** and click **Create Launch Template**.
 
 2. Name the Launch Template, and then under **Application and OS Images** include the app tier AMI you created.
-
-   ![](</demos/LaunchTemplateConfig1%20(1).png>)
 
    Under **Instance Type** select **t2.micro**. For **Key pair** and **Network Settings** don't include it in the template. We don't need a key pair to access our instances and we'll be setting the network information in the autoscaling group.
 
@@ -741,6 +742,3 @@ In order to clean up the resources in the AWS account and avoid incurring any ot
 
     Lastly, delete the VPC by navigating to Your VPCs on the lefthand side of the VPC dashboard. Select the VPC that we created for this lab, and under the Actions dropdown click Delete VPC. This will also delete the subnets and security groups.
 
-## License
-
-This library is licensed under the MIT-0 License. See the LICENSE file.
