@@ -36,7 +36,8 @@ It is intended for those who have a technical role. The assumption is that you h
 
 ## Architecture Overview
 
-![Architecture Diagram](/demos/3TierArch.png)
+<img width="1117" height="510" alt="image" src="https://github.com/user-attachments/assets/3d95e81b-9671-446e-81ed-022fddec079e" />
+
 
 In this architecture, a public-facing Application Load Balancer forwards client traffic to our web tier EC2 instances. The web tier is running Nginx webservers that are configured to serve a React.js website and redirects our API calls to the application tier’s internal facing load balancer. The internal facing load balancer then forwards that traffic to the application tier, which is written in Node.js. The application tier manipulates data in an Aurora MySQL multi-AZ database and returns it to our web tier. Load balancing, health checks and autoscaling groups are created at each layer to maintain the availability of this architecture.
 
@@ -51,6 +52,9 @@ git clone https://github.com/iamtejasmane/aws-three-tier-web-app.git
 1. Navigate to the S3 service in the AWS console and create a new S3 bucket.
 
 2. Select the region you want and give unique name to the bucket
+
+<img width="1238" height="481" alt="image" src="https://github.com/user-attachments/assets/08b80bb0-df31-4dd4-b237-8a57aff1a1ac" />
+
 
 ### IAM EC2 Instance Role Creation
 
