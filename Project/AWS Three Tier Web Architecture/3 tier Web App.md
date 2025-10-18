@@ -69,6 +69,8 @@ git clone https://github.com/iamtejasmane/aws-three-tier-web-app.git
 
 4. Give your role a name, and then click Create Role.
 
+<img width="1194" height="651" alt="image" src="https://github.com/user-attachments/assets/dd0b25a5-3631-4742-9129-392d9e81577e" />
+
 ## Networking and Security - Part 1
 
 Now we will be building out the VPC networking components as well as security groups that will add a layer of protection around our EC2 instances, Aurora databases, and Elastic Load Balancers.
@@ -80,6 +82,8 @@ Now we will be building out the VPC networking components as well as security gr
   - Internet Gateway
   - NAT gateway
   - Security Groups
+ 
+
 
 ### VPC and Subnets
 
@@ -92,7 +96,8 @@ Now we will be building out the VPC networking components as well as security gr
 
     <b>NOTE</b>: Choose a CIDR range that will allow you to create at least 6 subnets.
 
-    ![VPC](/demos/FillVPCSettings.png)
+<img width="1257" height="330" alt="image" src="https://github.com/user-attachments/assets/4e538a8f-1dd3-48f6-8232-e2a94cb3b86c" />
+
 
 #### Subnet Creation
 
@@ -105,7 +110,6 @@ Now we will be building out the VPC networking components as well as security gr
 
    Your final subnet setup should be similar to this. Verify that you have 3 subnets across 2 different availability zones.
 
-   ![subnet](/demos/FillSubnetDetails.png)
 
 ### Internet Connectivity
 
@@ -115,10 +119,10 @@ Now we will be building out the VPC networking components as well as security gr
 
 2. Create your internet gateway by simply giving it a name and clicking Create internet gateway.
 3. After creating the internet gateway, attach it to your VPC. You have a couple options on how to do this, either with the creation success message or the Actions drop down.
-
-   ![internetGateway](/demos/AttachIGW1.png)
-
 4. Then, select the correct VPC and click Attach internet gateway.
+
+<img width="1226" height="353" alt="image" src="https://github.com/user-attachments/assets/f8bea97e-4531-4e0d-8eb5-86e33b0ec76e" />
+
 
 #### NAT Gateway
 
@@ -126,7 +130,8 @@ Now we will be building out the VPC networking components as well as security gr
 
 2. Fill in the Name, choose one of the public subnets you have created, and then allocate an Elastic IP. Click Create NAT gateway.
 
-   ![NAT](/demos/FillNATGWDetails.png)
+<img width="1230" height="195" alt="image" src="https://github.com/user-attachments/assets/0b1769fa-ae36-4fa0-b216-add2fa4db454" />
+
 
 3. Repeat step 1 and 2 for the other subnet.
 
